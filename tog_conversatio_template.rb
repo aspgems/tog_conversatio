@@ -1,21 +1,23 @@
-#plugin 'thinking-sphinx', :git => "git://github.com/freelancing-god/thinking-sphinx.git"
-gem "RedCloth", :lib => "redcloth", :source => "http://code.whytheluckystiff.net"
 
-puts "\n"
-if yes?("Install required gems as root? (y/n). Please, answer 'n' if you are in windows")
-  rake "gems:install", :sudo => true
-else
-  rake "gems:install", :sudo => false
+def in_file(relative_destination, expr)
+  path = destination_path(relative_destination)
+  File.read(path).match(expr)
+end
+# add thinking-sphinx to Gemfile and update gems bundle
+unless in_file('Gemfile', /thinking-sphinx/)
+  append_file 'Gemfile', "gem 'thinking-sphinx',\t'1.3.3',\t:require_as => 'thinking_sphinx/0.9.8'\n"
+  run 'gem bundle'
 end
 
-plugin 'tog_conversatio', :git => "git://github.com/tog/tog_conversatio.git"
+plugin 'tog_conversatio', :git => "git://github.com/aspgems/tog_conversatio.git"
 
 route "map.routes_from_plugin 'tog_conversatio'"
 
 generate "update_tog_migration"
 
-#if yes?("Generate sphinx index? (only for MySQL and PostgreSQL) (y/n)")
-#  rake "thinking_sphinx:index"
-#end
+if yes?("Generate sphinx index? (only for MySQL and PostgreSQL) (y/n)")
+ rake "thinking_sphinx:index"
+end
+
 rake "db:migrate"
 
