@@ -7,6 +7,7 @@ end
 unless in_file('Gemfile', /thinking-sphinx/)
   append_file 'Gemfile', "gem 'thinking-sphinx',\t'1.3.3',\t:require_as => 'thinking_sphinx/0.9.8'\n"
   run 'gem bundle'
+  append_file 'Rakefile', "require 'thinking_sphinx/tasks'"
 end
 
 plugin 'tog_conversatio', :git => "git://github.com/aspgems/tog_conversatio.git"
