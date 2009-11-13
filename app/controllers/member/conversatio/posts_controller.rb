@@ -1,5 +1,6 @@
 class Member::Conversatio::PostsController < Member::BaseController
   before_filter :load_blog
+  before_filter :include_fckeditor, :only => [:new, :edit]
 
   helper 'conversatio/blogs'
 
@@ -49,7 +50,7 @@ class Member::Conversatio::PostsController < Member::BaseController
 
   def update
     @post = @blog.posts.find params[:id]
-    
+
     respond_to do |wants|
       if @post.update_attributes(params[:post])
         @post.update_attribute(:published_at, nil) unless params[:update_published_at]
@@ -82,5 +83,9 @@ class Member::Conversatio::PostsController < Member::BaseController
 private
   def load_blog
     @blog  = current_user.blogs.find params[:blog_id]
+  end
+
+  def include_fckeditor
+    @javascripts << :fckeditor
   end
 end
