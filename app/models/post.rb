@@ -20,7 +20,7 @@ class Post < ActiveRecord::Base
   belongs_to :blog
   belongs_to :user
 
-  named_scope :published, lambda { |*args| { :conditions => ['published_at <= ?', args.first || DateTime.now], :order => 'published_at DESC' } }
+  named_scope :published, lambda { |*args| { :conditions => ['published_at <= ?', args.first || DateTime.now.utc], :order => 'published_at DESC' } }
 
   define_index do
     indexes :title
@@ -37,7 +37,7 @@ class Post < ActiveRecord::Base
   aasm_initial_state :draft
 
   aasm_state :draft
-  aasm_state :published, :enter => Proc.new {|p| p.published_at = DateTime.now if p.published_at.nil? }
+  aasm_state :published, :enter => Proc.new {|p| p.published_at = DateTime.now.utc if p.published_at.nil? }
 
   aasm_event :publish do
     transitions :from => [:draft] , :to => :published
