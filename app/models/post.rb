@@ -46,7 +46,7 @@ class Post < ActiveRecord::Base
     end
 
     def self.site_search(query, search_options={})
-      self.search(query, search_options.merge(:with => { :state => 'published' })
+      self.search(query, search_options.merge(:with => { :state => 'published' }))
     end
   end
 
