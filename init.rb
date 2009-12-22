@@ -15,3 +15,5 @@ Tog::Plugins.helpers Conversatio::BlogsHelper
 
 Tog::Search.sources << "Post"
 Tog::Search.sources << "Blog"
+
+Tog::Plugins.settings :tog_conversatio, { 'search.skip_indices' => false }

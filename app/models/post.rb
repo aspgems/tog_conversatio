@@ -22,14 +22,6 @@ class Post < ActiveRecord::Base
 
   named_scope :published, lambda { |*args| { :conditions => ['published_at <= ?', args.first || DateTime.now.utc], :order => 'published_at DESC' } }
 
-  define_index do
-    indexes :title
-    indexes :body
-    indexes :state
-    
-    #set_property :delta => true
-  end
-
   validates_presence_of :title, :body
 
   include AASM
@@ -46,6 +38,18 @@ class Post < ActiveRecord::Base
     transitions :from => [:published] , :to => :draft
   end
 
+  unless Tog::Plugins.settings(:tog_conversatio, 'search.skip_indices')
+    define_index do
+      indexes :title
+      indexes :body
+      has :state
+    end
+
+    def self.site_search(query, search_options={})
+      self.search(query, search_options.merge(:with => { :state => 'published' })
+    end
+  end
+
   def owner
     user
   end
@@ -54,13 +58,4 @@ class Post < ActiveRecord::Base
     I18n.l(created_at, :format => format)
   end
   
-  #def self.site_search(query, search_options = {})
-  #  search query, :conditions => {:state=>'published'}
-  #end
-
-  def self.site_search(query, search_options={})
-    sql = "%#{query}%"
-    Post.published.find(:all, :conditions => ["title like ? or body like ?", sql, sql])
-  end
-
 end

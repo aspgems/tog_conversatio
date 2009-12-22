@@ -22,9 +22,15 @@ class Blog < ActiveRecord::Base
 
   validates_presence_of :title
   
-  def self.site_search(query, search_options={})
-    sql = "%#{query}%"
-    Blog.find(:all, :conditions => ["title like ? or description like ?", sql, sql])
+  unless Tog::Plugins.settings(:tog_conversatio, 'search.skip_indices')
+    define_index do
+      indexes title
+      indexes description
+    end
+  
+    def self.site_search(query, search_options={})
+      self.search query, search_options
+    end
   end
   
   def creation_date(format=:short)
