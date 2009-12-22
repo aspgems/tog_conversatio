@@ -1,6 +1,6 @@
 class Member::Conversatio::PostsController < Member::BaseController
   before_filter :load_blog
-  before_filter :include_fckeditor, :only => [:new, :edit]
+  before_filter :include_rich_text_editor, :only => [:new, :edit]
 
   helper 'conversatio/blogs'
 
@@ -85,7 +85,5 @@ private
     @blog  = current_user.blogs.find params[:blog_id]
   end
 
-  def include_fckeditor
-    @javascripts << :fckeditor
-  end
+  
 end

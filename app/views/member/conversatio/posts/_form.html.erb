@@ -10,6 +10,7 @@
   <legend><%= I18n.t('tog_conversatio.model.post.content')%></legend>
   <div class="fields">
     <p><label for="post_title"><%= I18n.t('tog_conversatio.model.post.title')%></label><%= f.text_field :title, :class=>"fieldbox wide" -%></p>
-    <p><label for="post_body"><%= I18n.t('tog_conversatio.model.post.body')%></label><%= fckeditor_textarea :post, :body, :toolbarSet => 'Basic', :class => "fieldset wide", :height => "200px" -%></p>
+    <p><label for="post_body"><%= I18n.t('tog_conversatio.model.post.body')%></label><%= rich_text_area :post, :body, :class => "fieldset wide", :height => "200px" -%></p>
+	<p><%=image_for_rich_text_area(:post, :body)%></p>
   </div>
 </fieldset>
