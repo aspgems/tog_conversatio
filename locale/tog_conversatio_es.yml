@@ -131,6 +131,7 @@ es:
             update_post: Actualizar
           new:
             create_post: Crear post
+            create_post_in_blog: Crear post en {{blog_title}}
             create_post_title: Crear un nuevo post en este blog
           show:
             comments_post: Comentarios en {{post_title}}

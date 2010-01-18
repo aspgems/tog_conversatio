@@ -131,6 +131,7 @@ en:
             update_post: Update post
           new:
             create_post: Create Post
+            create_post_in_blog: Create post in {{blog_title}}
             create_post_title: Create a new post on this blog
           show:
             comments_post: Comments {{post_title}}
