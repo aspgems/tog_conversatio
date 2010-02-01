@@ -88,10 +88,10 @@ es:
         blogs:
           index:
             title: Tus blogs
-            create_your_blog: Crar un blog
+            create_your_blog: Crear un blog
             blog_title: Título
             blog_posts: Posts
-            blog_created_at: Creado e
+            blog_created_at: Creado en
             add_post: Añadir post
             add_post_title: Crear un nuevo post en este blog
             manage_editors: Gestionar editores
@@ -102,7 +102,7 @@ es:
             title: Título
             description: Descripción
           blogs:
-            your_blogs: Tus blogs
+            your_blogs: Tu blog
             posts: Posts
             create_new_blog: Crear un nuevo blog
           edit:
